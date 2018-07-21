@@ -11,6 +11,8 @@ public class DestroyByContact : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        Debug.Log("This is me:");
+        Debug.Log(gameObject);
         if (!other.CompareTag("Boundary") && !other.CompareTag("Enemy"))
         {
             Destroy(other.gameObject);
