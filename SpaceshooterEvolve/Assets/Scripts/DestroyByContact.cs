@@ -2,19 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// This is now primarily for destroying the player.
+// It belongs to the player now.
+
 public class DestroyByContact : MonoBehaviour
 {
-    public GameObject explosion;
+    //public GameObject explosion;
     public GameObject playerExplosion;
-    public int scoreValue;
+    //public int scoreValue;
     private GameController gameController;
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("This is me:");
-        Debug.Log(gameObject);
-        if (!other.CompareTag("Boundary") && !other.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy"))
         {
+            /*
             Destroy(other.gameObject);
             Destroy(gameObject);
             if (explosion != null)
@@ -27,6 +29,10 @@ public class DestroyByContact : MonoBehaviour
                 Instantiate(playerExplosion, other.transform.position, other.transform.rotation);
                 gameController.GameOver();
             }
+            */
+            Destroy(gameObject);
+            Instantiate(playerExplosion, other.transform.position, other.transform.rotation);
+            gameController.GameOver();
         }
     }
 

@@ -29,15 +29,21 @@ public class GetShot : MonoBehaviour {
             if (hitPoints <= 0)
             {
                 Debug.Log("HP is less than 0");
-                getDestroyed();
+                GetDestroyed();
             }
             // This will eventually need to test for piercing shots and not destroy the player shot if it
             // is a piercing shot.
-            Destroy(other.gameObject);
+            DestroyBullet(other.gameObject, shotProps);
         }
     }
 
-    void getDestroyed ()
+    void DestroyBullet(GameObject other, PlayerShotProperties shotProps)
+    {
+        Instantiate(shotProps.poof, other.transform.position, other.transform.rotation);
+        Destroy(other);
+    }
+
+    void GetDestroyed ()
     {
         Debug.Log("Destroying Self");
         Destroy(gameObject);
