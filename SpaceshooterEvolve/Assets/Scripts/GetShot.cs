@@ -45,7 +45,6 @@ public class GetShot : MonoBehaviour {
 
     void GetDestroyed ()
     {
-        Debug.Log("Destroying Self");
         Destroy(gameObject);
         if (explosion != null)
         {
