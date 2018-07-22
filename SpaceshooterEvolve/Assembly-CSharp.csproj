@@ -76,6 +76,7 @@
     <Compile Include="Assets\Scripts\DestroyByContact.cs" />
     <Compile Include="Assets\Scripts\DestroyByTime.cs" />
     <Compile Include="Assets\Scripts\EvasiveManeuver.cs" />
+    <Compile Include="Assets\Scripts\FixedRotator.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\GetShot.cs" />
     <Compile Include="Assets\Scripts\Mover.cs" />
