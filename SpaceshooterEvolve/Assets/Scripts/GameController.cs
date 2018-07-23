@@ -87,7 +87,7 @@ public class GameController : MonoBehaviour {
         restartText.text = "";
         gameOverText.text = "";
         UpdateScore();
-        StartCoroutine(SpawnWaves());
+        //StartCoroutine(SpawnWaves());
 	}
 	
 }
