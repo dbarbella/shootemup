@@ -13,7 +13,7 @@ public class Waves : MonoBehaviour
 
     public float spawnWait;
     public float startWait;
-    public float waveWait;
+    //public float waveWait;
 
     public Text scoreText;
     private int score;
@@ -23,6 +23,14 @@ public class Waves : MonoBehaviour
 
     private bool gameOver;
     private bool restart;
+
+    public Vector3 randomSpawnValues;
+    public Vector2 randomSpawnAngles;
+
+    private GameController gameController;
+
+    public int startDifficulty;
+    public int difficultyRamp;
 
     private Wave[] allWaveTypes = new Wave[2];
 
@@ -63,7 +71,6 @@ public class Waves : MonoBehaviour
     {
         yield return new WaitForSeconds(wave.startWait);
         Spawn[] waveSchedule = wave.waveSchedule;
-        Debug.Log(wave);
         for (int i = 0; i < waveSchedule.Length; i++)
         {
             Spawn nextSpawn = waveSchedule[i];
@@ -76,6 +83,19 @@ public class Waves : MonoBehaviour
             //Quaternion spawnRotation = Quaternion.Euler(0.0f, Random.Range(spawnAngles.x, spawnAngles.y), 0.0f);
             Instantiate(nextHazard, nextSpawn.position, nextSpawn.rotation);
             yield return new WaitForSeconds(nextSpawn.delay);
+        }
+    }
+
+    // Spawns a random wave
+    IEnumerator SpawnRandomWave(int numHazards, float hazardWait, int[] hazardsToSpawn)
+    {
+        for (int i = 0; i < numHazards; i++)
+        {
+            GameObject hazard = hazards[Random.Range(0, hazards.Length)];
+            Vector3 spawnPosition = new Vector3(Random.Range(-randomSpawnValues.x, randomSpawnValues.x), randomSpawnValues.y, randomSpawnValues.z);
+            Quaternion spawnRotation = Quaternion.Euler(0.0f, Random.Range(randomSpawnAngles.x, randomSpawnAngles.y), 0.0f);
+            Instantiate(hazard, spawnPosition, spawnRotation);
+            yield return new WaitForSeconds(hazardWait);
         }
     }
 
@@ -102,7 +122,66 @@ public class Waves : MonoBehaviour
             StartCoroutine(SpawnWave(selectedWave));
             yield return new WaitForSeconds(selectedWave.totalTime);
 
-            if (gameOver)
+            if (gameController.gameOver)
+            {
+                restartText.text = "Press 'r' to restart";
+                restart = true;
+                break;
+            }
+        }
+    }
+
+    // We need to figure out some logic here such that the amount of time we wait scales with the length
+    // of the wave.
+    IEnumerator SpawnRampingWaves()
+    {
+        yield return new WaitForSeconds(startWait);
+        int difficulty = startDifficulty;
+        while (true)
+        {
+            StartCoroutine(SpawnRandomWaveOfDifficulty(difficulty, 0.5f, new int[] { 0, 1, 2, 3, 4, 5 }));
+            // This should stop being a magic number and start being something that cares about the difficulty.
+            // We could also cramp every wave into this number of seconds, I guess.
+            yield return new WaitForSeconds(8);
+
+            difficulty += difficultyRamp;
+
+            if (gameController.gameOver)
+            {
+                restartText.text = "Press 'r' to restart";
+                restart = true;
+                break;
+            }
+        }
+    }
+
+    // The intent is that this spawns a random wave of a particular difficulty
+    IEnumerator SpawnRandomWaveOfDifficulty(int difficulty, float hazardWait, int[] hazardsToSpawn)
+    {
+        // We want to generate hazards until we've reached the specified difficulty
+        int diffGenerated = 0;
+        int maxHazard = Mathf.Min(difficulty/5, hazards.Length-1) + 1;
+        while (diffGenerated < difficulty)
+        {
+            int nextHazIndex = Random.Range(0, maxHazard);
+            GameObject hazard = hazards[nextHazIndex];
+            diffGenerated += nextHazIndex + 1;
+            Vector3 spawnPosition = new Vector3(Random.Range(-randomSpawnValues.x, randomSpawnValues.x), randomSpawnValues.y, randomSpawnValues.z);
+            Quaternion spawnRotation = Quaternion.Euler(0.0f, Random.Range(randomSpawnAngles.x, randomSpawnAngles.y), 0.0f);
+            Instantiate(hazard, spawnPosition, spawnRotation);
+            yield return new WaitForSeconds(hazardWait);
+        }
+    }
+
+    IEnumerator SpawnRandomWaves()
+    {
+        yield return new WaitForSeconds(startWait);
+        while (true)
+        {
+            StartCoroutine(SpawnRandomWave(10, 0.5f, new int[] { 0, 1, 2, 3, 4, 5 }));
+            yield return new WaitForSeconds(8);
+
+            if (gameController.gameOver)
             {
                 restartText.text = "Press 'r' to restart";
                 restart = true;
@@ -131,11 +210,23 @@ public class Waves : MonoBehaviour
                                      new Spawn(new int[] { 0, 1, 2 }, new Vector3(-6, 0, 16), Quaternion.identity, 1)};
         Wave veeWave = new Wave(veeWaveSchedule, 6, 1);
 
+        GameObject gameControllerObject = GameObject.FindWithTag("GameController");
+        if (gameControllerObject != null)
+        {
+            gameController = gameControllerObject.GetComponent<GameController>();
+        }
+        if (gameController == null)
+        {
+            Debug.Log("Cannot find 'GameController' script.");
+        }
+
         //Wave[] 
         // This code is horrible, but it's just for testing.
         allWaveTypes[0] = testWave;
         allWaveTypes[1] = veeWave;
 
-        StartCoroutine(SpawnWaves());
+        //StartCoroutine(SpawnWaves());
+        //StartCoroutine(SpawnRandomWaves());
+        StartCoroutine(SpawnRampingWaves());
     }
 }

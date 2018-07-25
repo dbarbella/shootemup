@@ -20,7 +20,7 @@ public class GameController : MonoBehaviour {
     public Text restartText;
     public Text gameOverText;
 
-    private bool gameOver;
+    public bool gameOver;
     private bool restart;
 
     IEnumerator SpawnWaves()
