@@ -21,7 +21,7 @@ public class GameController : MonoBehaviour {
     public Text gameOverText;
 
     public bool gameOver;
-    private bool restart;
+    public bool restart;
 
     IEnumerator SpawnWaves()
     {

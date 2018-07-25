@@ -124,8 +124,8 @@ public class Waves : MonoBehaviour
 
             if (gameController.gameOver)
             {
-                restartText.text = "Press 'r' to restart";
-                restart = true;
+                gameController.restartText.text = "Press 'r' to restart";
+                gameController.restart = true;
                 break;
             }
         }
@@ -148,8 +148,8 @@ public class Waves : MonoBehaviour
 
             if (gameController.gameOver)
             {
-                restartText.text = "Press 'r' to restart";
-                restart = true;
+                gameController.restartText.text = "Press 'r' to restart";
+                gameController.restart = true;
                 break;
             }
         }
@@ -160,7 +160,7 @@ public class Waves : MonoBehaviour
     {
         // We want to generate hazards until we've reached the specified difficulty
         int diffGenerated = 0;
-        int maxHazard = Mathf.Min(difficulty/5, hazards.Length-1) + 1;
+        int maxHazard = Mathf.Min(difficulty/5, hazards.Length);
         while (diffGenerated < difficulty)
         {
             int nextHazIndex = Random.Range(0, maxHazard);
@@ -183,8 +183,8 @@ public class Waves : MonoBehaviour
 
             if (gameController.gameOver)
             {
-                restartText.text = "Press 'r' to restart";
-                restart = true;
+                gameController.restartText.text = "Press 'r' to restart";
+                gameController.restart = true;
                 break;
             }
         }
