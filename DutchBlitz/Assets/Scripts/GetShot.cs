@@ -8,28 +8,28 @@ using UnityEngine;
 public class GetShot : MonoBehaviour {
 
     public float hitPoints;
-    public GameObject explosion;
-    public int scoreValue;
+    public GameObject goodExplosion;
+    public GameObject badExplosion;
+    public int goodScoreValue;
+    public int badScoreValue;
     private GameController gameController;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PlayerShot"))
+        if (other.CompareTag("MayoShot") || other.CompareTag("KetShot"))
         {
-
-
-            // We need to decrement the hitPoints by the damage of the playerShot
-            // How can we define this? How can we get this?
-            // Do we just have a PlayerShotProperties script?
-            // We may need something like rb = GetComponent<Rigidbody>(); here?
             PlayerShotProperties shotProps = other.GetComponent<PlayerShotProperties>();
             hitPoints -= shotProps.ReportDamage();
-            if (hitPoints <= 0)
+            if ((other.CompareTag("MayoShot") && CompareTag("MayoEnemy")) ||
+                (other.CompareTag("KetShot") && CompareTag("KetEnemy")))
             {
-                GetDestroyed();
+                GoodDestroyed();
             }
-            // This will eventually need to test for piercing shots and not destroy the player shot if it
-            // is a piercing shot.
+            if ((other.CompareTag("KetShot") && CompareTag("MayoEnemy")) ||
+                (other.CompareTag("MayoShot") && CompareTag("KetEnemy")))
+            {
+                BadDestroyed();
+            }
             DestroyBullet(other.gameObject, shotProps);
         }
     }
@@ -40,14 +40,24 @@ public class GetShot : MonoBehaviour {
         Destroy(other);
     }
 
-    void GetDestroyed ()
+    void GoodDestroyed ()
     {
         Destroy(gameObject);
-        if (explosion != null)
+        if (goodExplosion != null)
         {
-            Instantiate(explosion, transform.position, transform.rotation);
+            Instantiate(goodExplosion, transform.position, transform.rotation);
         }
-        gameController.AddScore(scoreValue);
+        gameController.AddScore(goodScoreValue);
+    }
+
+    void BadDestroyed()
+    {
+        Destroy(gameObject);
+        if (badExplosion != null)
+        {
+            Instantiate(badExplosion, transform.position, transform.rotation);
+        }
+        gameController.AddScore(-badScoreValue);
     }
 
     private void Start()
