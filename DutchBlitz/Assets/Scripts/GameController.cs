@@ -6,12 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
 
-    public GameObject[] hazards;
+    //public GameObject[] hazards;
     public Vector3 spawnValues;
     public Vector2 spawnAngles;
     public int hazardCount;
-    public float spawnWait;
-    public float startWait;
+    //public float spawnWait;
+    //public float startWait;
     public float waveWait;
 
     public Text scoreText;
@@ -22,7 +22,7 @@ public class GameController : MonoBehaviour {
 
     public bool gameOver;
     public bool restart;
-
+    /*
     IEnumerator SpawnWaves()
     {
         yield return new WaitForSeconds(startWait);
@@ -48,7 +48,7 @@ public class GameController : MonoBehaviour {
             }
         }
     }
-
+    */
     private void Update()
     {
         if (restart)

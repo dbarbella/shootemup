@@ -15,11 +15,11 @@ public class Waves : MonoBehaviour
     public float startWait;
     //public float waveWait;
 
-    public Text scoreText;
+    //public Text scoreText;
     private int score;
 
-    public Text restartText;
-    public Text gameOverText;
+    //public Text restartText;
+    //public Text gameOverText;
 
     private bool gameOver;
     private bool restart;

@@ -14,7 +14,7 @@ public class DestroyByContact : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("KetEnemy") || other.CompareTag("MayoEnemy"))
         {
             /*
             Destroy(other.gameObject);
