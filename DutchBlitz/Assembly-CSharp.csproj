@@ -86,6 +86,7 @@
     <Compile Include="Assets\Scripts\Waves.cs" />
     <Compile Include="Assets\Scripts\WeaponController.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
+    <None Include="Assets\Audio\BloodSFX\ReadMe.txt" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>S:/Users/David/Documents/Spaceshooter/shootemup/DutchBlitz/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>

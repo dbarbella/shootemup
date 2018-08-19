@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// This is now primarily for destroying the player.
+// This is now primarily for dealing with player collisions with fries.
 // It belongs to the player now.
 
 public class DestroyByContact : MonoBehaviour
 {
     //public GameObject explosion;
     public GameObject playerExplosion;
+    public GameObject enemyExplosion;
+    public int collisionScoreValue;
+    
     //public int scoreValue;
     private GameController gameController;
 
@@ -16,22 +19,21 @@ public class DestroyByContact : MonoBehaviour
     {
         if (other.CompareTag("KetEnemy") || other.CompareTag("MayoEnemy"))
         {
-            /*
             Destroy(other.gameObject);
+            gameController.AddScore(-collisionScoreValue);
+            Instantiate(enemyExplosion, other.transform.position, other.transform.rotation);
+            // Play a sad sound
+            // Play an explosion
+
+        }
+    }
+
+    private void Update()
+    {
+        if (gameController.getScore() <= 0)
+        {
             Destroy(gameObject);
-            if (explosion != null)
-            {
-                Instantiate(explosion, transform.position, transform.rotation);
-            }
-            gameController.AddScore(scoreValue);
-            if (other.CompareTag("Player"))
-            {
-                Instantiate(playerExplosion, other.transform.position, other.transform.rotation);
-                gameController.GameOver();
-            }
-            */
-            Destroy(gameObject);
-            Instantiate(playerExplosion, other.transform.position, other.transform.rotation);
+            Instantiate(playerExplosion, transform.position, transform.rotation);
             gameController.GameOver();
         }
     }
@@ -49,3 +51,4 @@ public class DestroyByContact : MonoBehaviour
         }
     }
 }
+

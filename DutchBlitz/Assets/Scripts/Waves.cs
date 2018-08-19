@@ -13,13 +13,6 @@ public class Waves : MonoBehaviour
 
     public float spawnWait;
     public float startWait;
-    //public float waveWait;
-
-    //public Text scoreText;
-    private int score;
-
-    //public Text restartText;
-    //public Text gameOverText;
 
     private bool gameOver;
     private bool restart;
@@ -192,23 +185,6 @@ public class Waves : MonoBehaviour
 
     public void Start()
     {
-        Spawn[] testWaveSchedule = { new Spawn(new int[] { 0, 1, 2 }, new Vector3(0, 0, 16), Quaternion.identity, 1),
-                                     new Spawn(new int[] { 0, 1, 2 }, new Vector3(0, 0, 16), Quaternion.identity, 0),
-                                     new Spawn(new int[] { 0, 1, 2 }, new Vector3(-4, 0, 16), Quaternion.identity, 0),
-                                     new Spawn(new int[] { 0, 1, 2 }, new Vector3(4, 0, 16), Quaternion.identity, 1),
-                                     new Spawn(new int[] { 3 }, new Vector3(0, 0, 16), Quaternion.identity, 1),
-                                     new Spawn(new int[] { 4 }, new Vector3(0, 0, 16), Quaternion.identity, 1),
-                                     new Spawn(new int[] { 5 }, new Vector3(0, 0, 16), Quaternion.identity, 1)};
-        Wave testWave = new Wave(testWaveSchedule, 12, 1);
-
-        Spawn[] veeWaveSchedule = { new Spawn(new int[] { 0, 1, 2 }, new Vector3(0, 0, 16), Quaternion.identity, 1),
-                                     new Spawn(new int[] { 0, 1, 2 }, new Vector3(-2, 0, 16), Quaternion.identity, 0),
-                                     new Spawn(new int[] { 0, 1, 2 }, new Vector3(2, 0, 16), Quaternion.identity, 1),
-                                     new Spawn(new int[] { 0, 1, 2 }, new Vector3(-4, 0, 16), Quaternion.identity, 0),
-                                     new Spawn(new int[] { 0, 1, 2 }, new Vector3(4, 0, 16), Quaternion.identity, 1),
-                                     new Spawn(new int[] { 0, 1, 2 }, new Vector3(6, 0, 16), Quaternion.identity, 0),
-                                     new Spawn(new int[] { 0, 1, 2 }, new Vector3(-6, 0, 16), Quaternion.identity, 1)};
-        Wave veeWave = new Wave(veeWaveSchedule, 6, 1);
 
         GameObject gameControllerObject = GameObject.FindWithTag("GameController");
         if (gameControllerObject != null)
@@ -219,11 +195,6 @@ public class Waves : MonoBehaviour
         {
             Debug.Log("Cannot find 'GameController' script.");
         }
-
-        //Wave[] 
-        // This code is horrible, but it's just for testing.
-        allWaveTypes[0] = testWave;
-        allWaveTypes[1] = veeWave;
 
         //StartCoroutine(SpawnWaves());
         //StartCoroutine(SpawnRandomWaves());
