@@ -54,7 +54,7 @@ public class GameController : MonoBehaviour {
 
     public void GameOver()
     {
-        gameOverText.text = "Game Over";
+        gameOverText.text = "Thank you for playing!\n\nDesign: David Barbella\nConcept Design: Michelle Tong\nMusic: Baris Yaman";
         gameOver = true;
     }
 
