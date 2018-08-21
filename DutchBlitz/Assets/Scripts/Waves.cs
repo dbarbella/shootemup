@@ -132,7 +132,7 @@ public class Waves : MonoBehaviour
         int difficulty = startDifficulty;
         while (true)
         {
-            StartCoroutine(SpawnRandomWaveOfDifficulty(difficulty, 0.5f, new int[] { 0, 1, 2, 3, 4, 5 }));
+            StartCoroutine(SpawnRandomWaveOfDifficulty(difficulty, 0.5f, new int[] { 0, 1}));
             // This should stop being a magic number and start being something that cares about the difficulty.
             // We could also cramp every wave into this number of seconds, I guess.
             yield return new WaitForSeconds(8);
